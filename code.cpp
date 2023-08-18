@@ -10,13 +10,7 @@
 #define pf push_front
 const ll mod=1e9+7;
 using namespace std;
-map<ll,ll>m;
-map<ll,ll>:: iterator it;
-map<ll,ll>ans1;
-map<ll,ll>ans;
-vector<pair<ll,ll> >v;
-ll ar[1000000];
-
+vector<ll>v;
 //ll ex(ll a,ll b,ll mod)
 //{
 //    if(b==0)
@@ -43,59 +37,38 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    ll t,j,i;
-    ll n,num,a,b,y,c,pr=1;
+    ll j,i,t;
+    ll n,a,mn;
     cin>>t;
     while(t--)
     {
-        cin>>num;
-        y=num;
-        for(i=1; i<=num; i++)
-            ar[i]=0;
-        num--;
-        ans.clear();
-        v.clear();
-        pr=1;
         cin>>n;
+        stack<ll>s;
+        v.clear();
+
         for(i=0; i<n; i++)
         {
             cin>>a;
-            ans[a]=1;
+            v.pb(a);
         }
-        while(num--)
+        mn=v[0];
+        for(i=1; i<n; i++)
         {
-            pr++;
-            cin>>n;
-            for(i=0; i<n; i++)
+            if(s.empty())
             {
-                cin>>a;
-                ans.erase(a);
-
-                ans[a]=pr;
-
-
+                if(mn<v[i])
+                    s.push(v[i]);
+                else
+                    mn=min(v[i],mn);
+            }
+            else{
+                if(s.top()>v[i] && mn<v[i])
+                    s.push(v[i]);
+                mn=min(mn,v[i]);
             }
         }
+        cout<<s.size()<<endl;
 
-        for(it=ans.begin(); it!=ans.end(); it++)
-            {
-                a=it->first;
-                b=it->second;
-                if(ar[b]==1)
-                    continue;
-                v.pb({b,a});
-                ar[b]=1;
-            }
-        sort(v.begin(),v.end());
-        if(v.size()==y)
-        {
-            for(i=0; i<y; i++)
-                cout<<v[i].second<<" ";
-            cout<<endl;
-        }
-        else
-            cout<<-1<<endl;
     }
-
     return 0;
 }
