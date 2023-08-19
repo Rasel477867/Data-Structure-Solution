@@ -11,6 +11,38 @@
 const ll mod=1e9+7;
 using namespace std;
 vector<ll>v;
+map<ll,ll>m;
+//bool cheak(ll n,string s,string s1)
+//{
+//    set<string>s2;
+//
+//    ll i;
+//    if(s.size()%n!=0 || s.size()<n)
+//        return false;
+//    for(i=0; i<s.size()-n+1; i=i+n)
+//    {
+//        sub=s.substr(i,n);
+//
+//       if(s2.size()>1)
+//          return false;
+//        s2.insert(sub);
+//
+//    }
+//    if(s1.size()%n!=0 || s1.size()<n)
+//        return false;
+//    for(i=0; i<s1.size()-n+1; i+=n)
+//    {
+//        sub=s1.substr(i,n);
+//
+//        if(s2.size()>1)
+//            return false;
+//        s2.insert(sub);
+//    }
+//    if(s2.size()==1)
+//        return true;
+//    else
+//        return false;
+//}
 //ll ex(ll a,ll b,ll mod)
 //{
 //    if(b==0)
@@ -37,38 +69,50 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    ll j,i,t;
-    ll n,a,mn;
-    cin>>t;
+    ll i,j,t;
+    ll n,a,b,p=-1,sum;
+    cin>>n>>t;
+    sum=0;
+    for(i=0; i<n; i++)
+    {
+        cin>>a;
+        v.pb(a);
+        sum+=a;
+    }
     while(t--)
     {
-        cin>>n;
-        stack<ll>s;
-        v.clear();
-
-        for(i=0; i<n; i++)
+        ll num;
+        cin>>num;
+        if(num==1)
         {
-            cin>>a;
-            v.pb(a);
-        }
-        mn=v[0];
-        for(i=1; i<n; i++)
-        {
-            if(s.empty())
+            cin>>a>>b;
+            if(p==-1)
             {
-                if(mn<v[i])
-                    s.push(v[i]);
-                else
-                    mn=min(v[i],mn);
+                sum+=b-v[a-1];
+                v[a-1]=b;
+                cout<<sum<<endl;
             }
             else{
-                if(s.top()>v[i] && mn<v[i])
-                    s.push(v[i]);
-                mn=min(mn,v[i]);
+                if(m[a]==0)
+                {
+                    sum+=b-p;
+                    m[a]=b;
+                    cout<<sum<<endl;
+                }
+                else{
+                    sum+=b-m[a];
+                    cout<<sum<<endl;
+                }
             }
-        }
-        cout<<s.size()<<endl;
 
+        }
+        else{
+            cin>>a;
+            sum=a*n;
+            m.clear();
+            p=a;
+            cout<<sum<<endl;
+        }
     }
-    return 0;
+
 }
